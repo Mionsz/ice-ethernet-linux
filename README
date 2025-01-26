@@ -1,10 +1,10 @@
-ice Linux* Base Driver for the Intel(R) Ethernet 800 Series
+# ice Linux* Base Driver for the Intel(R) Ethernet 800 Series
 ***********************************************************
 
 December 09, 2024
 
 
-Contents
+## 1.0 Contents
 ^^^^^^^^
 
 * ice Linux* Base Driver for the Intel(R) Ethernet 800 Series
@@ -34,7 +34,7 @@ Contents
   * Trademarks
 
 
-Overview
+### 1.1 Overview
 ========
 
 This driver supports Linux* kernel versions 3.10.0 and newer. However,
@@ -59,7 +59,7 @@ and AF_XDP zero-copy on kernel 4.18 and later. Note that XDP is
 blocked for frame sizes larger than 3KB.
 
 
-Related Documentation
+### 1.2 Related Documentation
 =====================
 
 See the "Intel(R) Ethernet Adapters and Devices User Guide" for
@@ -67,7 +67,7 @@ additional information on features. It is available on the Intel
 website at https://cdrdv2.intel.com/v1/dl/getContent/705831.
 
 
-Identifying Your Adapter
+### 1.3 Identifying Your Adapter
 ========================
 
 The driver is compatible with devices based on the following:
@@ -91,11 +91,11 @@ Intel network drivers, refer to the Intel Support website at
 https://www.intel.com/support.
 
 
-Important Notes
+### 1.4 Important Notes
 ===============
 
 
-Configuring SR-IOV for improved network security
+#### 1.4.1 Configuring SR-IOV for improved network security
 ------------------------------------------------
 
 In a virtualized environment, on Intel(R) Ethernet Network Adapters
@@ -113,7 +113,7 @@ See Configuring VLAN Tagging on SR-IOV Enabled Adapter Ports later in
 this README for configuration instructions.
 
 
-Do not unload port driver if VF with active VM is bound to it
+#### 1.4.2 Do not unload port driver if VF with active VM is bound to it
 -------------------------------------------------------------
 
 Do not unload a port's driver if a Virtual Function (VF) with an
@@ -122,7 +122,7 @@ port to appear to hang. Once the VM shuts down, or otherwise releases
 the VF, the command will complete.
 
 
-Firmware Recovery Mode
+#### 1.4.3 Firmware Recovery Mode
 ----------------------
 
 A device will enter Firmware Recovery mode if it detects a problem
@@ -133,7 +133,7 @@ Refer to the "Intel(R) Ethernet Adapters and Devices User Guide" for
 details on Firmware Recovery Mode and how to recover from it.
 
 
-Important Notes for SR-IOV, RDMA, and Link Aggregation
+#### 1.4.4 Important Notes for SR-IOV, RDMA, and Link Aggregation
 ------------------------------------------------------
 
 The VF driver will not block teaming/bonding/link aggregation, but
@@ -159,7 +159,7 @@ the interface from the bridge or MACVLAN, you must follow these steps:
 4. Reactivate RDMA and recreate SR-IOV VFs as needed
 
 
-Building and Installation
+## 2.0 Building and Installation
 =========================
 
 The ice driver requires the Dynamic Device Personalization (DDP)
@@ -182,7 +182,7 @@ Note:
   information.
 
 
-To manually build the driver
+### 2.1 To manually build the driver
 ----------------------------
 
 1. Move the base driver tar file to the directory of your choice. For
@@ -273,7 +273,7 @@ To manually build the driver
       ping <IP_address>
 
 
-To build a binary RPM package of this driver
+### 2.2 To build a binary RPM package of this driver
 --------------------------------------------
 
 Note:
@@ -333,7 +333,7 @@ Note:
     -r'/build".
 
 
-Command Line Parameters
+### 2.3 Command Line Parameters
 =======================
 
 The only command line parameter the ice driver supports is the debug
@@ -344,11 +344,11 @@ In general, use ethtool and other OS-specific commands to configure
 user-changeable parameters after the driver is loaded.
 
 
-Additional Features and Configurations
+### 2.4 Additional Features and Configurations
 ======================================
 
 
-ethtool
+#### 2.4.1 ethtool
 -------
 
 The driver utilizes the ethtool interface for driver configuration and
@@ -357,7 +357,7 @@ ethtool version is required for this functionality. Download it at
 https://kernel.org/pub/software/network/ethtool/.
 
 
-Viewing Link Messages
+#### 2.4.2  Viewing Link Messages
 ---------------------
 
 Link messages will not be displayed to the console if the distribution
@@ -372,7 +372,7 @@ Note:
   This setting is not saved across reboots.
 
 
-Dynamic Device Personalization
+### 2.5  Dynamic Device Personalization
 ------------------------------
 
 Dynamic Device Personalization (DDP) allows you to change the packet
@@ -403,7 +403,7 @@ only applies to the affected physical function and does not impact any
 other PFs. See the "Intel(R) Ethernet Adapters and Devices User Guide"
 for more details on DDP and Safe Mode.
 
-Note:
+#### 2.5.1 Note:
 
   * If you encounter issues with the DDP package file, you may need to
     download an updated driver or DDP package file. See the log
@@ -419,6 +419,8 @@ Note:
 
   * Only the first loaded PF per device can download a package for
     that device.
+
+#### 2.5.2 Install specific DDP package 
 
 You can install specific DDP package files for different physical
 devices in the same system. To install a specific DDP package file:
@@ -459,7 +461,7 @@ Note:
   loading of the default DDP package file ("ice.pkg").
 
 
-RDMA (Remote Direct Memory Access)
+### 2.6 RDMA (Remote Direct Memory Access)
 ----------------------------------
 
 Remote Direct Memory Access, or RDMA, allows a network device to
@@ -486,7 +488,7 @@ For detailed installation and configuration information for RDMA, see
 the README file in the irdma driver tarball.
 
 
-RDMA in the VF
+#### 2.6.1 RDMA in the VF
 --------------
 
 Devices based on the Intel(R) Ethernet 800 Series support RDMA in a
@@ -508,7 +510,7 @@ Note:
   between the VF and PF driver.
 
 
-Auxiliary Bus
+### 2.7 Auxiliary Bus
 -------------
 
 Inter-Driver Communication (IDC) is the mechanism in which LAN drivers
@@ -516,7 +518,7 @@ Inter-Driver Communication (IDC) is the mechanism in which LAN drivers
 in kernel 5.11, Intel LAN and RDMA drivers use an auxiliary bus
 mechanism for IDC.
 
-RDMA functionality requires use of the auxiliary bus.
+#### 2.7.1 RDMA functionality requires use of the auxiliary bus.
 
 If your kernel supports the auxiliary bus, the LAN and RDMA drivers
 will use the inbox auxiliary bus for IDC. For kernels lower than 5.11,
@@ -524,7 +526,7 @@ the base driver will automatically install an out-of-tree auxiliary
 bus module.
 
 
-NVM Express* (NVMe) over TCP and Fabrics
+### 2.8 NVM Express* (NVMe) over TCP and Fabrics
 ----------------------------------------
 
 RDMA provides a high throughput, low latency means to directly access
@@ -545,7 +547,7 @@ https://www.intel.com/content/www/us/en/design/products-and-solutions
 /networking-and-io/ethernet-controller-e810/technical-library.html
 
 
-Link Aggregation and RDMA
+### 2.9 Link Aggregation and RDMA
 -------------------------
 
 Link aggregation (LAG) and RDMA are compatible only if all the
@@ -601,7 +603,7 @@ If the ice driver is configured for active-active LAG:
   originally allocated port.
 
 
-Application Device Queues (ADQ)
+### 2.10.0 Application Device Queues (ADQ)
 -------------------------------
 
 Application Device Queues (ADQ) allow you to dedicate one or more
@@ -613,7 +615,7 @@ The ADQ information contained here is specific to the ice driver. For
 more details, refer to the E810 ADQ Configuration Guide at
 https://cdrdv2.intel.com/v1/dl/getContent/609008.
 
-Requirements:
+#### 2.10.1 Requirements:
 
 * Kernel version: Varies by feature. Refer to the E810 ADQ
   Configuration Guide for more information on required kernel versions
@@ -642,7 +644,7 @@ Requirements:
      make DESTDIR=/opt/iproute2 install
      ln -s /opt/iproute2/sbin/tc /usr/local/sbin/tc
 
-When ADQ is enabled:
+#### 2.10.2 When ADQ is enabled:
 
 * You cannot change RSS parameters, the number of queues, or the MAC
   address in the PF or VF. Delete the ADQ configuration before
@@ -670,7 +672,7 @@ See Creating Traffic Class Filters in this README for more information
 on configuring filters, including examples. See the E810 ADQ
 Configuration Guide for detailed instructions.
 
-ADQ KNOWN ISSUES:
+#### 2.10.3 ADQ KNOWN ISSUES:
 
 * The latest RHEL and SLES distros have kernels with back-ported
   support for ADQ. For all other Linux distributions, you must use LTS
@@ -733,7 +735,7 @@ ADQ KNOWN ISSUES:
   properly.
 
 
-Setting Up ADQ
+### 2.11 Setting Up ADQ
 ~~~~~~~~~~~~~~
 
 To set up the adapter for ADQ, where "<ethX>" is the interface in use:
@@ -757,7 +759,7 @@ To set up the adapter for ADQ, where "<ethX>" is the interface in use:
       ethtool --show-priv-flags <ethX>
 
 
-ADQ Configuration Script
+### 2.12 ADQ Configuration Script
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Intel also provides a script to configure ADQ. This script allows you
@@ -771,7 +773,7 @@ The script and README are also available as part of the Python Package
 Index at https://pypi.org/project/adqsetup.
 
 
-Using ADQ with Independent Pollers
+### 2.13 Using ADQ with Independent Pollers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ice driver supports ADQ acceleration using independent pollers.
@@ -826,7 +828,7 @@ For example:
      devlink dev param set pci/0000:3b:00.0 name tc1_poller_timeout value 1000 cmode runtime
 
 
-Configuring ADQ Flows per Traffic Class
+### 2.14 Configuring ADQ Flows per Traffic Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ice out-of-tree driver allows you to configure inline Intel(R)
@@ -876,7 +878,7 @@ the specified device:
    devlink dev param show pci/0000:af:00.0 name tc2_inline_fd
 
 
-Creating Traffic Classes
+### 2.15 Creating Traffic Classes
 ------------------------
 
 Note:
@@ -953,7 +955,7 @@ To create traffic classes on the interface:
 
       tc qdisc show dev <ethX> ingress
 
-TRAFFIC CLASS EXAMPLES:
+#### 2.15.1 TRAFFIC CLASS EXAMPLES:
 
 See the tc and tc-flower man pages for more information on traffic
 control and TC flower filters.
@@ -997,7 +999,7 @@ control and TC flower filters.
      max_rate 25Gbit 50Gbit
 
 
-Creating Traffic Class Filters
+### 2.16 Creating Traffic Class Filters
 ------------------------------
 
 Note:
@@ -1121,7 +1123,7 @@ Note:
      tcp src_port 5555 action skbedit priority 1
 
 
-Using TC Filters to Forward to a Queue
+### 2.17 Using TC Filters to Forward to a Queue
 --------------------------------------
 
 The ice driver supports directing traffic based on L2/L3/L4 fields in
@@ -1165,7 +1167,7 @@ To direct 4 source MAC addresses to Rx queues 10-13:
    68:dd:ac:dc:19:03 skip_sw classid ffff:e
 
 
-Intel(R) Ethernet Flow Director
+### 2.18 Intel(R) Ethernet Flow Director
 -------------------------------
 
 The Intel(R) Ethernet Flow Director (Intel(R) Ethernet FD) performs
@@ -1223,7 +1225,7 @@ that summarizes supported Intel Ethernet Flow Director features across
 Intel(R) Ethernet controllers.
 
 
-Intel Ethernet Flow Director Filters
+### 2.19 Intel Ethernet Flow Director Filters
 ------------------------------------
 
 Intel Ethernet Flow Director filters are used to direct traffic that
@@ -1347,7 +1349,7 @@ Note:
   or use a different type of filtering.
 
 
-Flex Byte Intel Ethernet Flow Director Filters
+### 2.20 Flex Byte Intel Ethernet Flow Director Filters
 ----------------------------------------------
 
 The driver also supports matching user-defined data within the packet
